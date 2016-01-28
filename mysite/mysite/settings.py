@@ -26,6 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+
+TEMPLATE_PATH = os.path.join(BASE_DIR,'templates')
 
 # Application definition
 
@@ -36,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rango',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,10 +52,15 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_DIRS = (TEMPLATE_PATH,)
+
 ROOT_URLCONF = 'mysite.urls'
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -81,3 +90,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (STATIC_PATH,)
