@@ -99,61 +99,61 @@ def add_page(request, category_name_slug):
 
         return render(request, 'rango/add_page.html', context_dict)
 
-def register(request):
-    registered = False
+#def user_login(request):
 
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
+#    if request.method == 'POST':
+#        username = request.POST.get('username')
+#        password = request.POST.get('password')
+#        print username + ' ' + password
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
+#        user = authenticate(username=username, password=password)
+#        print user
+#        if user:
+#            if user.is_active:
+#                login(request,user)
+#                return HttpResponseRedirect('/rango/')
+#            else:
+#                return HttpResponse("Your Rango account is disabled.")
+#        else:
+#            print "Invalid login details: {0}, {1}".format(username,password)
+#            return HttpResponse("Invalid login details supplied")
+#    else:
+#        return render(request, 'rango/login.html',{})
 
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+#@login_required
+#def user_logout(request):
+#    logout(request)
+#    return HttpResponseRedirect('/rango/')
 
-            profile.save()
-            registered = True
+#def register(request):
+#   registered = False
+#
+#    if request.method == 'POST':
+#        user_form = UserForm(data=request.POST)
+#        profile_form = UserProfileForm(data=request.POST)
+#        if user_form.is_valid() and profile_form.is_valid():
+#            user = user_form.save()
+#            user.set_password(user.password)
+#            user.save()
 
-        else:
-            print user_form.errors, profile_form.errors
+#            profile = profile_form.save(commit=False)
+#            profile.user = user
 
-    else:
-        user_form =UserForm()
-        profile_form = UserProfileForm()
+#            if 'picture' in request.FILES:
+#                profile.picture = request.FILES['picture']
 
-    return render(request, 'rango/register.html',
-                  {'user_form':user_form, 'profile_form':profile_form, 'registered':registered})
+#            profile.save()
+#            registered = True
 
-def user_login(request):
+#        else:
+#            print user_form.errors, profile_form.errors
 
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print username + ' ' + password
+#    else:
+#        user_form =UserForm()
+#        profile_form = UserProfileForm()
 
-        user = authenticate(username=username, password=password)
-        print user
-        if user:
-            if user.is_active:
-                login(request,user)
-                return HttpResponseRedirect('/rango/')
-            else:
-                return HttpResponse("Your Rango account is disabled.")
-        else:
-            print "Invalid login details: {0}, {1}".format(username,password)
-            return HttpResponse("Invalid login details supplied")
-    else:
-        return render(request, 'rango/login.html',{})
-
-@login_required
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect('/rango/')
+#    return render(request, 'rango/register.html',
+#                  {'user_form':user_form, 'profile_form':profile_form, 'registered':registered})
 
 @login_required
 def restricted(request):

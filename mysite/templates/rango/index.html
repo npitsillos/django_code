@@ -2,26 +2,49 @@
 
 {% load staticfiles %}
 
-{% block body_block %}
+{% block title %}Index{% endblock %}
+
+        {% block body_block %}
 {% if user.is_authenticated %}
-    <h1>Rango says...hello {{ user.username }}!</h1>
-{% else %}
-    <h1>Rango says...hello world!</h1>
-{% endif %}
-{% if categories %}
-    <ul>
-        {% for category in categories %}
-        <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <strong>There are no categories present.</strong>
-{% endif %}
-<br/>
-<h1>Most Viewed</h1>
-<ul>
-    {% for page in most_viewed %}
-    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-    {% endfor %}
-</ul>
-{% endblock %}
+    <div class="page-header">
+
+                <h1>Rango says... hello {{ user.username }}!</h1>
+            {% else %}
+                <h1>Rango says... hello world!</h1>
+            {% endif %}
+</div>
+
+         <div class="row placeholders">
+            <div class="col-xs-12 col-sm-6 placeholder">
+               <h4 class="panel-title">Categories</h4>
+
+              {% if categories %}
+                    <ul class="list-group">
+                        {% for category in categories %}
+                         <li class="list-group-item"><a href="{% url 'category'  category.slug %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>There are no categories present.</strong>
+                {% endif %}
+
+            </div>
+            <div class="col-xs-12 col-sm-6 placeholder">
+              <h4 class="panel-title">Pages</h4>
+
+                {% if pages %}
+                    <ul class="list-group">
+                        {% for page in pages %}
+                         <li class="list-group-item"><a href="{{page.url}}">{{ page.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>There are no categories present.</strong>
+                {% endif %}
+            </div>
+
+          </div>
+
+
+       <p> visits: {{ visits }}</p>
+        {% endblock %}
