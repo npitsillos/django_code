@@ -5,6 +5,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.bing_search import run_query
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -158,3 +159,15 @@ def add_page(request, category_name_slug):
 @login_required
 def restricted(request):
     return render(request,'rango/restricted.html')
+
+def search(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', {'result_list': result_list})
